@@ -3,6 +3,7 @@ import argparse
 from dotenv import load_dotenv
 from openai import OpenAI
 from prompts import system_prompt
+from call_function import available_funtions
 
 parser = argparse.ArgumentParser(description="Chatbot")
 parser.add_argument("user_prompt", type=str, help="User prompt")
@@ -14,6 +15,7 @@ def main():
     load_dotenv()
     api_key = os.environ.get("OPENROUTER_API_KEY")
     messages = [
+        {"role": "system", "content": system_prompt},
         {"role": "user", "content": args.user_prompt},
     ]
     if api_key is None:
@@ -27,6 +29,7 @@ def main():
     response = client.chat.completions.create(
         model="openrouter/free",
         messages=messages,
+        temperature=0,
     )
 
     if response.usage is None:
