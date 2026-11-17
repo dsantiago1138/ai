@@ -1,5 +1,5 @@
-from get_files_info import schema_get_files_info
+from functions.get_files_info import schema_get_files_info
 
-available_funtions = [
+available_functions = [
     schema_get_files_info,
 ]
