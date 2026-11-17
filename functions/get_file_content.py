@@ -5,21 +5,21 @@ schema_get_file_content ={
     "type": "function",
     "function": {
         "name": "get_file_content",
-        "description": 
+        "description": "Returns the contents of a specified file relative to the working directory as a string",
         "parameters": {
             "type": "object",
+            "required": ["file_path"],
             "properties": {
                 "file_path": {
                     "type": "string",
-                    "description"
+                    "description":"Path to specified file relative to the working directory"
                 },
             },
         },
     },
 }
 
-
-
+"description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
         working_dir_abs = os.path.abspath(working_directory)
