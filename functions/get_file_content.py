@@ -1,6 +1,24 @@
 import os
-
 from config import CHAR_LIMIT
+
+schema_get_file_content ={
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": 
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description"
+                },
+            },
+        },
+    },
+}
+
+
 
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:

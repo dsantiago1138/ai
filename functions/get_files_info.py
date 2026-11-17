@@ -17,6 +17,21 @@ schema_get_files_info = {
     },
 }
 
+schema_get_file_content ={
+    "type": "function",
+    "function": {
+        "name": 
+    }
+
+}
+
+schema_run_python_file = {
+
+}
+
+schema_write_file = {
+
+}
 def get_files_info(working_directory: str, directory: str = ".") -> str:
     try:
         working_dir_abs = os.path.abspath(working_directory)
