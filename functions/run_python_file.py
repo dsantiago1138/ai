@@ -1,34 +1,25 @@
 import os
 import subprocess
 
-schema_run_pythonfile = {
+schema_run_python_file = {
     "type": "function",
     "function": {
         "name": "run_python_file",
-        "description": ,
-        "parameters": {
-            "type": "object",
-            "required": ["file_content"],
-            "properties": {
-                
-            }
-        }
-    }
-}
-
-
-schema_get_file_content ={
-    "type": "function",
-    "function": {
-        "name": "get_file_content",
-        "description": "Returns the contents of a specified file relative to the working directory as a string",
+        "description": "Run the specified file ending in .py",
         "parameters": {
             "type": "object",
             "required": ["file_path"],
             "properties": {
                 "file_path": {
                     "type": "string",
-                    "description":"Path to specified file relative to the working directory"
+                    "description": "Path to specified file relative to the working directory"
+                },
+                "args": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                    },
+                    "description": "An array of optional command line arguments to pass to the Python file"
                 },
             },
         },
