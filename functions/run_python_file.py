@@ -1,6 +1,41 @@
 import os
 import subprocess
 
+schema_run_pythonfile = {
+    "type": "function",
+    "function": {
+        "name": "run_python_file",
+        "description": ,
+        "parameters": {
+            "type": "object",
+            "required": ["file_content"],
+            "properties": {
+                
+            }
+        }
+    }
+}
+
+
+schema_get_file_content ={
+    "type": "function",
+    "function": {
+        "name": "get_file_content",
+        "description": "Returns the contents of a specified file relative to the working directory as a string",
+        "parameters": {
+            "type": "object",
+            "required": ["file_path"],
+            "properties": {
+                "file_path": {
+                    "type": "string",
+                    "description":"Path to specified file relative to the working directory"
+                },
+            },
+        },
+    },
+}
+
+
 def run_python_file(
     working_directory: str, file_path: str, args: list[str] | None = None
 ) -> str:

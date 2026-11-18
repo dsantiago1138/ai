@@ -1,7 +1,7 @@
 import os
 from config import CHAR_LIMIT
 
-schema_get_file_content ={
+schema_get_file_content = {
     "type": "function",
     "function": {
         "name": "get_file_content",
@@ -19,7 +19,7 @@ schema_get_file_content ={
     },
 }
 
-"description": "Directory path to list files from, relative to the working directory (default is the working directory itself)",
+
 def get_file_content(working_directory: str, file_path: str) -> str:
     try:
         working_dir_abs = os.path.abspath(working_directory)
