@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from prompts import system_prompt
 from call_function import available_functions
+from call function import call_function
 
 parser = argparse.ArgumentParser(description="Chatbot")
 parser.add_argument("user_prompt", type=str, help="User prompt")
@@ -49,9 +50,13 @@ def main():
             function_args = json.loads(tool_call.function.arguments or "{}")
             print(f"Calling function: {tool_call.function.name}({function_args})")
     else:
-        print(message.content)
+        result_message = call_function(**function_args)
 
+    if result_message == "":
+        raise Exception("content not found")
     
-
+    if verbose:
+        print(f"-> {result_message['content']}")
+        
 if __name__ == "__main__":
     main()
