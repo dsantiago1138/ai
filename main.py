@@ -1,3 +1,4 @@
+import sys
 import os
 import argparse
 import json
@@ -14,6 +15,7 @@ args = parser.parse_args()
 
 
 def main():
+    
     load_dotenv()
     api_key = os.environ.get("OPENROUTER_API_KEY")
     messages = [
@@ -28,30 +30,40 @@ def main():
         api_key=api_key,
     )
 
-    response = client.chat.completions.create(
-        model="openrouter/free",
-        messages=messages,
-        temperature=0,
-        tools=available_functions,
-    )
+    for _ in range(20):
 
-    if response.usage is None:
-        raise RuntimeError("response not found")
+        response = client.chat.completions.create(
+            model="openrouter/free",
+            messages=messages,
+            temperature=0,
+            tools=available_functions,
+        )
 
-    if args.verbose:
-        print(f"Prompt tokens: {response.usage.prompt_tokens}")
-        print(f"Response tokens: {response.usage.completion_tokens}")
-        print(f"User prompt: {args.user_prompt}")
+        if response.usage is None:
+            raise RuntimeError("response not found")
 
-    message = response.choices[0].message
-    
-    if message.tool_calls:
-        for tool_call in message.tool_calls:
-            result_message = call_function(tool_call, args.verbose)
-            if result_message['content'] == "":
-                raise Exception("content not found")
-            if args.verbose:
-                print(f"-> {result_message['content']}")
+        if args.verbose:
+            print(f"Prompt tokens: {response.usage.prompt_tokens}")
+            print(f"Response tokens: {response.usage.completion_tokens}")
+            print(f"User prompt: {args.user_prompt}")
+
+        message = response.choices[0].message
+        messages.append(message)
+        
+        if message.tool_calls:
+            for tool_call in message.tool_calls:
+                result_message = call_function(tool_call, args.verbose)
+                messages.append(result_message)
+                if result_message['content'] == "":
+                    raise Exception("content not found")
+                if args.verbose:
+                    print(f"-> {result_message['content']}")
+        else:
+            print(message.content)
+            return
+
+    print("Max iterations reached with no result")
+    sys.exit(1)
         
 if __name__ == "__main__":
     main()
